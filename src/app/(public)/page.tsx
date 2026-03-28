@@ -168,12 +168,17 @@ export default function HomePage() {
                 down, to discover something beautiful, and to leave feeling
                 more like yourself.
               </p>
+              <p className={styles.rentalCallout}>
+                <strong>Now available:</strong> A 400 sq ft retail space with
+                private entrance, plus styling and makeup stations for
+                experienced professionals. $800/mo, all utilities included.
+              </p>
               <div className={styles.spaceCtas}>
+                <Button href="/collective">
+                  View Available Spaces
+                </Button>
                 <Button href="/shop" variant="secondary">
                   Shop the Collective
-                </Button>
-                <Button href="/collective" variant="ghost">
-                  Join Us
                 </Button>
               </div>
             </div>

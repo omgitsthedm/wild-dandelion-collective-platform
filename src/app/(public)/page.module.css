@@ -165,6 +165,19 @@
   margin-bottom: var(--space-xl);
 }
 
+.rentalCallout {
+  background: rgba(143, 166, 142, 0.1);
+  border-left: 3px solid var(--color-sage);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: var(--text-body) !important;
+  color: var(--color-ink) !important;
+}
+
+.rentalCallout strong {
+  color: var(--color-sage-dark);
+}
+
 .spaceCtas {
   display: flex;
   flex-wrap: wrap;

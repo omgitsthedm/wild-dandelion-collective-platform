@@ -30,6 +30,106 @@
   margin-bottom: var(--space-2xl);
 }
 
+/* ─── Available Spaces ───────────────────── */
+
+.spacesSection {
+  margin-bottom: var(--space-2xl);
+}
+
+.spacesHeading {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
+
+.spaceCard {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-lg);
+  border-left: 4px solid var(--color-sage);
+}
+
+.spaceCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-md);
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.spaceCardTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.spaceCardPrice {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-sage-dark);
+}
+
+.perMonth {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 400;
+  color: var(--color-ink-light);
+}
+
+.spaceCardDescription {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-light);
+  margin-bottom: var(--space-md);
+}
+
+.spaceCardFeatures {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.spaceCardFeatures li {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+  padding-left: var(--space-md);
+  position: relative;
+}
+
+.spaceCardFeatures li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-sage);
+  font-weight: 600;
+}
+
+/* ─── CTA Section ────────────────────────── */
+
+.ctaSection {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: rgba(143, 166, 142, 0.08);
+  border-radius: var(--radius-md);
+}
+
+.ctaText {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+  font-style: italic;
+}
+
 /* ─── Amenities ──────────────────────────── */
 
 .amenitiesSection {
