@@ -5,4 +5,11 @@ export {
   PhotoFrame,
   Input,
   NavDock,
+  ServiceCard,
+  TestimonialCard,
+  StepIndicator,
+  Accordion,
+  ContactInfo,
+  GalleryGrid,
+  Footer,
 } from './components';

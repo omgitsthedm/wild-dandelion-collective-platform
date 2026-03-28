@@ -1,4 +1,5 @@
 import { NavDock } from '@/design-system/components/NavDock';
+import { Footer } from '@/design-system/components/Footer';
 import { headers } from 'next/headers';
 
 export default async function PublicLayout({
@@ -12,6 +13,7 @@ export default async function PublicLayout({
   return (
     <>
       {children}
+      <Footer />
       <NavDock currentPath={pathname} />
     </>
   );

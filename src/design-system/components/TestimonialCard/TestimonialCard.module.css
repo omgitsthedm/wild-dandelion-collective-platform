@@ -1,0 +1,39 @@
+.card {
+  position: relative;
+  padding: var(--space-xl) var(--space-lg);
+  padding-top: calc(var(--space-xl) + 12px);
+  background: var(--color-parchment);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  margin: 0;
+}
+
+.mark {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-lg);
+  font-family: var(--font-heading);
+  font-size: 64px;
+  line-height: 1;
+  color: var(--color-sage);
+  opacity: 0.3;
+  pointer-events: none;
+  user-select: none;
+}
+
+.quote {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.attribution {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-ink-light);
+  letter-spacing: var(--tracking-wide);
+}

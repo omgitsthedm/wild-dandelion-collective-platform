@@ -1,0 +1,43 @@
+.step {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+}
+
+.circle {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  color: white;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xs) 0;
+  line-height: var(--leading-tight);
+  padding-top: 2px;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+  margin: 0;
+}
