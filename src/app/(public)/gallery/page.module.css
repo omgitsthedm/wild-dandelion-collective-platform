@@ -1,0 +1,32 @@
+.page {
+  padding-block: var(--space-section);
+}
+
+.instagramCta {
+  text-align: center;
+  padding-block-start: var(--space-section);
+  border-block-start: 1px solid var(--color-line);
+  margin-block-start: var(--space-2xl);
+}
+
+.instagramText {
+  font-family: var(--font-accent);
+  font-size: var(--text-accent);
+  color: var(--color-ink-light);
+  margin-block-end: var(--space-md);
+}
+
+.instagramLink {
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-sage-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.instagramLink:hover {
+  color: var(--color-terracotta);
+}

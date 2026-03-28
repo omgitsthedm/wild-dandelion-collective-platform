@@ -1,0 +1,124 @@
+/* ───────────────────────────────────────────
+   Collective — Suite Rental
+   ─────────────────────────────────────────── */
+
+.page {
+  padding-block: var(--space-section);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ─── Intro ──────────────────────────────── */
+
+.intro {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-light);
+  max-width: 60ch;
+  margin-bottom: var(--space-xl);
+}
+
+/* ─── Photo ──────────────────────────────── */
+
+.photoWrap {
+  max-width: 640px;
+  margin-bottom: var(--space-2xl);
+}
+
+/* ─── Amenities ──────────────────────────── */
+
+.amenitiesSection {
+  margin-bottom: var(--space-2xl);
+}
+
+.amenitiesHeading {
+  font-family: var(--font-ui);
+  font-size: var(--text-h3);
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-lg);
+}
+
+.amenitiesGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 540px) {
+  .amenitiesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.amenityItem {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+  padding-block: var(--space-sm);
+  border-bottom: 1px solid var(--color-line);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.amenityItem::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sage);
+  flex-shrink: 0;
+}
+
+/* ─── Inquiry Form ───────────────────────── */
+
+.formSection {
+  background: var(--color-parchment-dark);
+  border-radius: 8px;
+  padding: var(--space-xl);
+  max-width: 600px;
+}
+
+.formHeading {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin-bottom: var(--space-sm);
+}
+
+.formIntro {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-light);
+  margin-bottom: var(--space-xl);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.honeypot {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+.submitWrap {
+  margin-top: var(--space-md);
+}
