@@ -1,0 +1,27 @@
+.wrapper {
+  margin-bottom: var(--space-xl);
+}
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-sage);
+  margin-bottom: var(--space-sm);
+}
+
+.title {
+  font-family: var(--font-heading);
+  line-height: var(--leading-tight);
+}
+
+.divider {
+  width: 40px;
+  height: 2px;
+  background: var(--color-golden);
+  border: none;
+  margin-top: var(--space-md);
+  border-radius: 1px;
+}
