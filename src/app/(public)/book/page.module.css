@@ -1,0 +1,175 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.intro {
+  text-align: center;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.serviceCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: white;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    border-color var(--duration-normal) ease,
+    transform var(--duration-fast) var(--ease-spring);
+}
+
+/* Booking bloom pseudo-element */
+.serviceCard::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--color-sage);
+  transform: translate(-50%, -50%);
+  transition:
+    width var(--duration-slow) var(--ease-soft),
+    height var(--duration-slow) var(--ease-soft);
+  z-index: 0;
+}
+
+.serviceCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.serviceCard:hover {
+  border-color: var(--color-sage);
+}
+
+.serviceCard:active {
+  transform: scale(0.98);
+}
+
+.serviceCardSelected {
+  border-color: var(--color-sage-dark);
+}
+
+.serviceCardSelected::before {
+  width: 400%;
+  height: 400%;
+}
+
+.serviceCardSelected .serviceName,
+.serviceCardSelected .serviceLabel,
+.serviceCardSelected .serviceMeta,
+.serviceCardSelected .serviceDescription {
+  color: white;
+}
+
+.serviceCardSelected .consultBadge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.consultBadge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-parchment-dark);
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-terracotta);
+  transition: background var(--duration-normal) ease, color var(--duration-normal) ease;
+}
+
+.serviceName {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0;
+  transition: color var(--duration-normal) ease;
+}
+
+.serviceLabel {
+  font-family: var(--font-accent);
+  font-size: var(--text-accent);
+  color: var(--color-ink-light);
+  margin: 0;
+  transition: color var(--duration-normal) ease;
+}
+
+.serviceDescription {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+  margin: 0;
+  transition: color var(--duration-normal) ease;
+}
+
+.serviceMeta {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-xs);
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+  transition: color var(--duration-normal) ease;
+}
+
+.footer {
+  text-align: center;
+  padding-top: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serviceCard {
+    transition: none;
+    animation: none;
+  }
+  .serviceCard::before {
+    transition: none;
+  }
+  .serviceCard:active {
+    transform: none;
+  }
+}

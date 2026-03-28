@@ -12,4 +12,5 @@ export {
   ContactInfo,
   GalleryGrid,
   Footer,
+  TimeSlot,
 } from './components';

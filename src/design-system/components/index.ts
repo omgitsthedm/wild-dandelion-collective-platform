@@ -11,3 +11,4 @@ export { Accordion } from './Accordion';
 export { ContactInfo } from './ContactInfo';
 export { GalleryGrid } from './GalleryGrid';
 export { Footer } from './Footer';
+export { TimeSlot } from './TimeSlot';

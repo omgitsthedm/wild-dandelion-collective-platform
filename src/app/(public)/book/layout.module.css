@@ -1,0 +1,112 @@
+.wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-parchment);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-parchment);
+  border-bottom: 1px solid var(--color-line);
+  padding: var(--space-md) var(--gutter);
+}
+
+.headerInner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--color-ink-light);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) ease;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.backButton:hover {
+  color: var(--color-ink);
+}
+
+.backArrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.progressArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.progressDots {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-line);
+  transition: background var(--duration-normal) var(--ease-soft);
+}
+
+.dotActive {
+  background: var(--color-sage);
+}
+
+.dotCompleted {
+  background: var(--color-sage-dark);
+}
+
+.stepLabel {
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-ink-light);
+}
+
+/* Spacer to balance the back button on the right side */
+.spacer {
+  width: 44px;
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: var(--space-xl) var(--gutter) var(--space-2xl);
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-block: var(--space-2xl);
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+  }
+}
