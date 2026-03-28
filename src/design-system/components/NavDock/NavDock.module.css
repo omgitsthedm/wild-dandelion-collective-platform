@@ -33,6 +33,11 @@
   white-space: nowrap;
 }
 
+.item:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
 .item:hover {
   color: var(--color-ink);
 }

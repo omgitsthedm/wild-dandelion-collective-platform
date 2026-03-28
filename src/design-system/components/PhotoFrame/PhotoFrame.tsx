@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import styles from './PhotoFrame.module.css';
 
 type PhotoFrameVariant = 'default' | 'deckled' | 'inset';
@@ -13,6 +14,8 @@ type PhotoFrameProps = {
   developing?: boolean;
   width?: number;
   height?: number;
+  priority?: boolean;
+  sizes?: string;
   className?: string;
 };
 
@@ -24,6 +27,8 @@ export function PhotoFrame({
   developing = true,
   width,
   height,
+  priority = false,
+  sizes,
   className,
 }: PhotoFrameProps) {
   const ref = useRef<HTMLElement>(null);
@@ -56,7 +61,14 @@ export function PhotoFrame({
 
   return (
     <figure ref={ref} className={classes}>
-      <img src={src} alt={alt} width={width} height={height} loading="lazy" />
+      <Image
+        src={src}
+        alt={alt}
+        width={width ?? 800}
+        height={height ?? 600}
+        sizes={sizes ?? '(max-width: 768px) 100vw, 50vw'}
+        priority={priority}
+      />
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </figure>
   );

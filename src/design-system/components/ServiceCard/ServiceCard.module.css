@@ -15,6 +15,11 @@
   min-height: 180px;
 }
 
+.card:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
 .card:hover {
   box-shadow: var(--shadow-lg);
   border-color: var(--color-sage);

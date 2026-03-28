@@ -31,6 +31,12 @@
   box-shadow: 0 0 0 3px rgba(143, 166, 142, 0.15);
 }
 
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
 .textarea {
   resize: vertical;
   min-height: 120px;

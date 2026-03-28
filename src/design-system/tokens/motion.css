@@ -80,3 +80,24 @@
   filter: grayscale(0%) contrast(1) brightness(1);
   transform: scale(1);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .headline-reveal {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .prose-reveal > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .photo-develop {
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}

@@ -22,6 +22,11 @@
   cursor: pointer;
 }
 
+.interactive:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
 .interactive:active {
   transform: scale(0.97) translateY(2px);
   box-shadow: var(--shadow-sm);

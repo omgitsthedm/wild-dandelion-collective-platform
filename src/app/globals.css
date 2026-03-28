@@ -100,6 +100,29 @@ h3 {
   color: var(--color-ink-light);
 }
 
+/* Skip navigation */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--gutter);
+  z-index: 100;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-sage);
+  color: white;
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  font-weight: 500;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  text-decoration: none;
+  transition: top var(--duration-fast) ease;
+}
+
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid var(--color-sage-dark);
+  outline-offset: 2px;
+}
+
 .container {
   width: 100%;
   max-width: var(--max-width);

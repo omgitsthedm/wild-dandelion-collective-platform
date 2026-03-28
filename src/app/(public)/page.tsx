@@ -86,7 +86,7 @@ function DandelionSeed({ className }: { className?: string }) {
 
 export default function HomePage() {
   return (
-    <main>
+    <main id="main-content">
       {/* ── 1. Hero ──────────────────────────── */}
       <section className={styles.hero}>
         <DandelionSeed className={styles.dandelionSeed} />
@@ -113,6 +113,7 @@ export default function HomePage() {
               src="/images/ashley-portrait.webp"
               alt="Ashley at The Wild Dandelion Collective"
               developing
+              priority
             />
           </div>
         </div>

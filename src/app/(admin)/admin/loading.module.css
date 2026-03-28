@@ -1,0 +1,43 @@
+.skeleton {
+  min-height: 100dvh;
+  background: var(--color-parchment);
+  padding: var(--space-xl);
+}
+
+.topBar {
+  height: 48px;
+  max-width: 240px;
+  border-radius: var(--radius-md);
+  background: var(--color-parchment-dark);
+  margin-bottom: var(--space-xl);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-lg);
+}
+
+.card {
+  height: 160px;
+  border-radius: var(--radius-lg);
+  background: var(--color-parchment-dark);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topBar,
+  .card {
+    animation: none;
+    opacity: 0.5;
+  }
+}
