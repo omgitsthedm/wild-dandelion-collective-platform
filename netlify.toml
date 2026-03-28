@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/textures/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
