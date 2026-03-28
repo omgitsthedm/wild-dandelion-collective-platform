@@ -1,0 +1,114 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.header {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+/* Product Grid */
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.productRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--radius-sm);
+  background: white;
+  border: 1px solid var(--color-line);
+}
+
+.productImage {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--color-parchment-dark);
+  flex-shrink: 0;
+}
+
+.productInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.productName {
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.productBrand {
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+}
+
+.stockBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  font-weight: 500;
+  flex-shrink: 0;
+  background: rgba(143, 166, 142, 0.12);
+  color: var(--color-sage-dark);
+}
+
+.stockLow {
+  background: rgba(193, 122, 92, 0.15);
+  color: var(--color-terracotta);
+}
+
+.stockOut {
+  background: rgba(184, 92, 79, 0.12);
+  color: var(--color-error);
+}
+
+/* Star toggle */
+.starBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-line);
+  transition: color var(--duration-fast) ease;
+  border-radius: 50%;
+}
+
+.starBtn:hover {
+  color: var(--color-golden);
+}
+
+.starActive {
+  color: var(--color-golden);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .starBtn {
+    transition: none;
+  }
+}

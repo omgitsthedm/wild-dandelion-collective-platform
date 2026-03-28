@@ -13,4 +13,5 @@ export {
   GalleryGrid,
   Footer,
   TimeSlot,
+  AdminNav,
 } from './components';

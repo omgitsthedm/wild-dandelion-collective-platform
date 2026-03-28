@@ -12,3 +12,4 @@ export { ContactInfo } from './ContactInfo';
 export { GalleryGrid } from './GalleryGrid';
 export { Footer } from './Footer';
 export { TimeSlot } from './TimeSlot';
+export { AdminNav } from './AdminNav';
