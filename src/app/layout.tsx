@@ -2,9 +2,20 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'The Wild Dandelion Collective',
+  title: {
+    default: 'The Wild Dandelion Collective',
+    template: '%s | The Wild Dandelion Collective',
+  },
   description:
-    'A verdant space for beauty, art, and curated living in Longmont, Colorado.',
+    'A verdant space for beauty, art, and curated living in Longmont, Colorado. Curated goods, professional hair care, and an intimate micro salon.',
+  metadataBase: new URL('https://thewilddandelioncollective.com'),
+  openGraph: {
+    title: 'The Wild Dandelion Collective',
+    description:
+      'A verdant space for beauty, art, and curated living in Longmont, Colorado.',
+    type: 'website',
+    locale: 'en_US',
+  },
 };
 
 export default function RootLayout({

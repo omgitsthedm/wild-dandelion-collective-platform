@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;600&family=Caveat:wght@400&display=swap');
+
+:root {
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-accent: 'Caveat', cursive;
+
+  --text-hero: 30px;
+  --text-h1: 28px;
+  --text-h2: 22px;
+  --text-h3: 16px;
+  --text-body: 16px;
+  --text-small: 13px;
+  --text-label: 11px;
+  --text-accent: 18px;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.65;
+  --leading-relaxed: 1.8;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-hero: 44px;
+    --text-h1: 36px;
+    --text-h2: 28px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --text-hero: 52px;
+    --text-h1: 42px;
+    --text-h2: 32px;
+  }
+}

@@ -1,0 +1,11 @@
+:root {
+  --shadow-sm: 0 2px 8px rgba(44, 36, 32, 0.06);
+  --shadow-md: 0 6px 24px rgba(44, 36, 32, 0.08);
+  --shadow-lg: 0 12px 40px rgba(44, 36, 32, 0.12);
+  --shadow-strong: 0 28px 68px rgba(44, 36, 32, 0.14);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --radius-pill: 100px;
+}

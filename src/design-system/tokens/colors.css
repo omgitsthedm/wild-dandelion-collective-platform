@@ -1,0 +1,24 @@
+:root {
+  /* Surfaces */
+  --color-parchment: #F7F3E9;
+  --color-parchment-dark: #EDE6D6;
+
+  /* Brand */
+  --color-sage: #8FA68E;
+  --color-sage-dark: #6B826B;
+  --color-terracotta: #C17A5C;
+  --color-golden: #D4A574;
+
+  /* Text */
+  --color-ink: #2C2420;
+  --color-ink-light: #5C5348;
+
+  /* Status */
+  --color-success: #7A9E7E;
+  --color-warning: #D4A574;
+  --color-error: #B85C4F;
+
+  /* Derived */
+  --color-line: rgba(44, 36, 32, 0.1);
+  --color-overlay: rgba(44, 36, 32, 0.4);
+}
