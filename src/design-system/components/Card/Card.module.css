@@ -1,0 +1,45 @@
+.card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-parchment);
+}
+
+.flat {
+  border: 1px solid var(--color-line);
+}
+
+.elevated {
+  box-shadow: var(--shadow-md);
+}
+
+.interactive {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform var(--duration-fast) ease-out,
+    box-shadow var(--duration-fast) ease-out;
+  cursor: pointer;
+}
+
+.interactive:active {
+  transform: scale(0.97) translateY(2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.interactive:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.cardInner {
+  padding: var(--space-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive {
+    transition: none;
+  }
+  .interactive:active {
+    transform: none;
+  }
+}
