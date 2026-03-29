@@ -1,4 +1,4 @@
-import type { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -6,9 +6,25 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/'],
+        disallow: [
+          '/admin/*',
+          '/api/*',
+          '/_next/*',
+          '/private/*',
+          '/draft/*',
+        ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/admin/*', '/api/*'],
+      },
+      {
+        userAgent: 'Googlebot-Image',
+        allow: '/',
       },
     ],
-    sitemap: 'https://thewilddandelioncollective.com/sitemap.xml',
+    sitemap: 'https://the-wild-dandelion-collective.netlify.app/sitemap.xml',
+    host: 'https://the-wild-dandelion-collective.netlify.app',
   };
 }

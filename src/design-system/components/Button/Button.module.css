@@ -1,99 +1,214 @@
+/* ═════════════════════════════════════════════════════════════════════════════
+   Button — Modern, playful, warm design
+   ═════════════════════════════════════════════════════════════════════════════ */
+
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-sm);
-  padding: 14px 28px;
+  gap: var(--space-2);
+  padding: var(--button-padding-y) var(--button-padding-x);
   border: none;
   border-radius: var(--radius-pill);
   font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
   cursor: pointer;
   text-decoration: none;
-  transition:
-    transform var(--duration-fast) var(--ease-spring),
-    box-shadow var(--duration-fast) ease,
-    background var(--duration-normal) ease;
+  white-space: nowrap;
   position: relative;
   overflow: hidden;
-  min-height: 44px;
+  min-height: 48px;
+  transition: 
+    transform var(--duration-fast) var(--ease-bounce),
+    box-shadow var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth);
 }
 
+/* Focus state */
 .button:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--focus-coral);
 }
 
+/* Press effect */
 .button:active {
-  transform: scale(0.96);
+  transform: var(--press-scale);
 }
 
-.button::after {
+/* Shine effect */
+.button::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
-  transform: translate(-50%, -50%) scale(0);
-  opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left var(--duration-slow) var(--ease-smooth);
 }
 
-.button:active::after {
-  transform: translate(-50%, -50%) scale(2);
-  opacity: 1;
-  transition: 0s;
+.button:hover::before {
+  left: 100%;
 }
 
+/* ═══ Variants ═══ */
+
+/* Primary — Coral gradient, most important action */
 .primary {
-  background: var(--color-sage);
-  color: white;
-  box-shadow: var(--shadow-sm);
+  background: var(--gradient-coral);
+  color: var(--color-white);
+  box-shadow: var(--shadow-coral);
 }
 
 .primary:hover {
-  background: var(--color-sage-dark);
-  box-shadow: var(--shadow-md);
+  transform: var(--hover-lift);
+  box-shadow: 0 12px 40px rgba(255, 107, 107, 0.35);
 }
 
+.primary:active {
+  box-shadow: var(--shadow-coral);
+}
+
+/* Secondary — Mint gradient, secondary action */
 .secondary {
-  background: transparent;
-  color: var(--color-ink);
-  border: 1.5px solid var(--color-line);
+  background: var(--gradient-mint);
+  color: var(--color-white);
+  box-shadow: var(--shadow-mint);
 }
 
 .secondary:hover {
-  border-color: var(--color-sage);
-  color: var(--color-sage-dark);
+  transform: var(--hover-lift);
+  box-shadow: 0 12px 40px rgba(78, 205, 196, 0.35);
 }
 
+/* Outline — Glass effect, subtle action */
+.outline {
+  background: var(--glass-white);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--color-ink);
+  border: 1.5px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.outline:hover {
+  background: var(--glass-cream);
+  border-color: var(--color-coral);
+  color: var(--color-coral);
+  transform: var(--hover-lift);
+  box-shadow: var(--shadow-md);
+}
+
+/* Ghost — Text only, least emphasis */
 .ghost {
   background: transparent;
-  color: var(--color-sage-dark);
-  padding: 14px 16px;
+  color: var(--color-ink-light);
+  padding-inline: var(--space-3);
 }
 
 .ghost:hover {
-  color: var(--color-sage);
+  color: var(--color-coral);
+  background: var(--color-coral-soft);
 }
+
+/* Gradient — Sunset gradient, special moments */
+.gradient {
+  background: var(--gradient-sunset);
+  background-size: 200% 200%;
+  color: var(--color-white);
+  box-shadow: var(--shadow-lg);
+  animation: gradient-shift 3s ease infinite;
+}
+
+.gradient:hover {
+  transform: var(--hover-lift) scale(1.02);
+  box-shadow: 0 16px 48px rgba(255, 107, 107, 0.3);
+}
+
+/* Lavender accent */
+.accent {
+  background: var(--gradient-lavender);
+  color: var(--color-white);
+  box-shadow: var(--shadow-lavender);
+}
+
+.accent:hover {
+  transform: var(--hover-lift);
+  box-shadow: 0 12px 40px rgba(167, 139, 250, 0.35);
+}
+
+/* ═══ Sizes ═══ */
+
+.small {
+  padding: var(--space-2) var(--space-4);
+  min-height: 36px;
+  font-size: var(--text-tiny);
+}
+
+.large {
+  padding: var(--space-4) var(--space-8);
+  min-height: 56px;
+  font-size: var(--text-body);
+}
+
+/* ═══ States ═══ */
 
 .fullWidth {
   width: 100%;
 }
 
+.disabled,
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.disabled::before,
+.button:disabled::before {
+  display: none;
+}
+
+/* Loading state */
+.loading {
+  cursor: wait;
+}
+
+.loading::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: var(--space-2);
+}
+
+/* ═══ Reduced Motion ═══ */
+
 @media (prefers-reduced-motion: reduce) {
   .button {
     transition: none;
   }
-  .button:active {
+  
+  .button::before {
+    display: none;
+  }
+  
+  .button:hover {
     transform: none;
   }
-  .button::after {
-    display: none;
+  
+  .gradient {
+    animation: none;
   }
 }

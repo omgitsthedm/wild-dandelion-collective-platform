@@ -1,0 +1,3 @@
+module.exports=[12842,a=>{a.v({card:"loading-module__Su1xzq__card",grid:"loading-module__Su1xzq__grid",pulse:"loading-module__Su1xzq__pulse",skeleton:"loading-module__Su1xzq__skeleton",topBar:"loading-module__Su1xzq__topBar"})},81901,a=>{"use strict";var b=a.i(7997),c=a.i(12842);a.s(["default",0,function(){return(0,b.jsxs)("div",{className:c.default.skeleton,"aria-busy":"true","aria-label":"Loading admin panel",children:[(0,b.jsx)("div",{className:c.default.topBar}),(0,b.jsxs)("div",{className:c.default.grid,children:[(0,b.jsx)("div",{className:c.default.card}),(0,b.jsx)("div",{className:c.default.card}),(0,b.jsx)("div",{className:c.default.card})]})]})}])},79e3,a=>{a.n(a.i(81901))}];
+
+//# sourceMappingURL=src_app_%28admin%29_admin_0vgb504._.js.map

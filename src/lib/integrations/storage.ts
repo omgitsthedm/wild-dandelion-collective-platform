@@ -1,83 +1,143 @@
-/**
- * Netlify Blobs storage wrapper.
- * When NETLIFY_BLOBS_TOKEN is missing (local dev), logs and returns mock URLs.
- */
+import { getStore } from '@netlify/blobs';
 
-const STORE_NAME = 'wild-dandelion-assets';
+// Netlify Blobs store for consultation photos
+function getPhotoStore() {
+  // In Netlify environment, this uses the built-in env vars
+  // In local dev, you need NETLIFY_BLOBS_TOKEN and NETLIFY_SITE_ID
+  return getStore({
+    name: 'consultation-photos',
+    siteID: process.env.NETLIFY_SITE_ID,
+    token: process.env.NETLIFY_BLOBS_TOKEN,
+  });
+}
 
-function getBlobsAvailable(): boolean {
-  return !!(process.env.NETLIFY_BLOBS_TOKEN && process.env.NETLIFY_SITE_ID);
+function isConfigured(): boolean {
+  const hasNetlify = !!(process.env.NETLIFY_BLOBS_TOKEN && process.env.NETLIFY_SITE_ID);
+  const isNetlifyDeploy = !!process.env.NETLIFY;
+  // In Netlify deploy context, the token is auto-provisioned
+  return hasNetlify || isNetlifyDeploy;
 }
 
 /**
- * Upload a blob to Netlify Blobs.
- * Returns the public URL of the stored blob.
+ * Upload a file to Netlify Blobs
  */
 export async function uploadBlob(
   key: string,
-  data: Buffer | ReadableStream,
-  contentType: string,
+  data: Buffer | Blob,
+  contentType: string
 ): Promise<string> {
-  if (!getBlobsAvailable()) {
-    console.log(`[STORAGE PLACEHOLDER] uploadBlob: key=${key}, contentType=${contentType}`);
-    return `https://mock-blobs.local/${STORE_NAME}/${key}`;
+  if (!isConfigured()) {
+    console.log(`[STORAGE PLACEHOLDER] Would upload: ${key} (${contentType})`);
+    // Return a placeholder URL that includes the key for debugging
+    return `https://placeholder.storage/${key}`;
   }
 
-  // Wire Netlify Blobs when ready:
-  // import { getStore } from '@netlify/blobs';
-  // const store = getStore({ name: STORE_NAME, siteID: process.env.NETLIFY_SITE_ID!, token: process.env.NETLIFY_BLOBS_TOKEN! });
-  // await store.set(key, data, { metadata: { contentType } });
-  // return store.get(key, { type: 'blob' }) URL
+  try {
+    const store = getPhotoStore();
+    // Convert Buffer to Blob for Netlify Blobs compatibility
+    const blob = data instanceof Buffer 
+      ? new Blob([data as unknown as BlobPart], { type: contentType })
+      : data;
+    await store.set(key, blob as Blob, {
+      metadata: { contentType },
+    });
 
-  const siteId = process.env.NETLIFY_SITE_ID;
-  const token = process.env.NETLIFY_BLOBS_TOKEN;
-
-  const raw = Buffer.isBuffer(data) ? data : await streamToBuffer(data as ReadableStream);
-  const body = new Uint8Array(raw);
-
-  const response = await fetch(
-    `https://api.netlify.com/api/v1/blobs/${siteId}/${STORE_NAME}/${encodeURIComponent(key)}`,
-    {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': contentType,
-      },
-      body,
-    },
-  );
-
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Blob upload failed (${response.status}): ${text}`);
+    // Return the public URL
+    return `https://${process.env.NETLIFY_SITE_ID}.netlify.app/.netlify/blobs/photo/${key}`;
+  } catch (error) {
+    console.error('[STORAGE] upload error:', error);
+    throw new Error(`Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
-
-  return `https://api.netlify.com/api/v1/blobs/${siteId}/${STORE_NAME}/${encodeURIComponent(key)}`;
 }
 
 /**
- * Get the URL for a stored blob.
+ * Get a signed URL for a blob
  */
-export async function getBlobUrl(key: string): Promise<string> {
-  if (!getBlobsAvailable()) {
-    console.log(`[STORAGE PLACEHOLDER] getBlobUrl: key=${key}`);
-    return `https://mock-blobs.local/${STORE_NAME}/${key}`;
+export async function getBlobUrl(key: string): Promise<string | null> {
+  if (!isConfigured()) {
+    return `https://placeholder.storage/${key}`;
   }
 
-  const siteId = process.env.NETLIFY_SITE_ID;
-  return `https://api.netlify.com/api/v1/blobs/${siteId}/${STORE_NAME}/${encodeURIComponent(key)}`;
+  try {
+    const store = getPhotoStore();
+    const blob = await store.get(key);
+    
+    if (!blob) {
+      return null;
+    }
+
+    // Return the public URL
+    return `https://${process.env.NETLIFY_SITE_ID}.netlify.app/.netlify/blobs/photo/${key}`;
+  } catch (error) {
+    console.error('[STORAGE] get error:', error);
+    return null;
+  }
 }
 
-/** Helper to convert ReadableStream to Buffer */
-async function streamToBuffer(stream: ReadableStream): Promise<Buffer> {
-  const reader = stream.getReader();
-  const chunks: Uint8Array[] = [];
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    if (value) chunks.push(value);
+/**
+ * Delete a blob
+ */
+export async function deleteBlob(key: string): Promise<boolean> {
+  if (!isConfigured()) {
+    console.log(`[STORAGE PLACEHOLDER] Would delete: ${key}`);
+    return true;
   }
 
-  return Buffer.concat(chunks);
+  try {
+    const store = getPhotoStore();
+    await store.delete(key);
+    return true;
+  } catch (error) {
+    console.error('[STORAGE] delete error:', error);
+    return false;
+  }
+}
+
+/**
+ * Upload a consultation photo
+ * Returns the public URL of the uploaded photo
+ */
+export async function uploadConsultationPhoto(
+  consultationId: string,
+  photoIndex: number,
+  file: File | Buffer,
+  originalName: string
+): Promise<string> {
+  const extension = originalName.split('.').pop() || 'jpg';
+  const key = `consultations/${consultationId}/photo-${photoIndex}.${extension}`;
+  
+  let buffer: Buffer;
+  if (file instanceof File) {
+    const arrayBuffer = await file.arrayBuffer();
+    buffer = Buffer.from(arrayBuffer);
+  } else {
+    buffer = file;
+  }
+
+  const contentType = file instanceof File 
+    ? file.type 
+    : `image/${extension === 'jpg' ? 'jpeg' : extension}`;
+
+  return uploadBlob(key, buffer, contentType);
+}
+
+/**
+ * List photos for a consultation
+ */
+export async function listConsultationPhotos(consultationId: string): Promise<string[]> {
+  if (!isConfigured()) {
+    return [];
+  }
+
+  try {
+    const store = getPhotoStore();
+    const { blobs } = await store.list({
+      prefix: `consultations/${consultationId}/`,
+    });
+
+    return blobs.map(blob => blob.key);
+  } catch (error) {
+    console.error('[STORAGE] list error:', error);
+    return [];
+  }
 }

@@ -1,0 +1,3 @@
+{
+  "/api/notify/booking-confirmed/route": "app/api/notify/booking-confirmed/route.js"
+}

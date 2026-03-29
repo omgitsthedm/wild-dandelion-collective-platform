@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(public)/layout,_N_T_/(public)/book/layout,_N_T_/(public)/book/deposit/layout,_N_T_/(public)/book/deposit/page,_N_T_/book/deposit"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KHB1YmxpYyk/book/deposit/__PAGE__",
+    "/!KHB1YmxpYyk/book/deposit",
+    "/!KHB1YmxpYyk/book",
+    "/!KHB1YmxpYyk",
+    "/_index",
+    "/_head"
+  ]
+}

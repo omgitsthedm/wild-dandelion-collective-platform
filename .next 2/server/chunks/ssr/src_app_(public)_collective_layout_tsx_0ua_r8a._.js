@@ -1,0 +1,3 @@
+module.exports=[59632,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)(b.Fragment,{children:a})},"metadata",0,{title:"Join the Collective — Salon Suite & Retail Space for Rent in Longmont",description:"Now available: 400 sq ft retail space and styling stations at The Wild Dandelion Collective on Main Street in Longmont, CO. $800/mo, all utilities included.",openGraph:{title:"Join the Collective — Salon Suite & Retail Space for Rent in Longmont",description:"400 sq ft retail space and styling stations available now. $800/mo, all utilities included.",type:"website"}}])},3024,a=>{a.n(a.i(59632))}];
+
+//# sourceMappingURL=src_app_%28public%29_collective_layout_tsx_0ua_r8a._.js.map

@@ -1,0 +1,115 @@
+.container {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background: var(--color-parchment);
+}
+
+.content {
+  max-width: 480px;
+  text-align: center;
+}
+
+.icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-lg);
+  color: var(--color-terracotta);
+  animation: soften-in 0.6s var(--ease-soft) both;
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  color: var(--color-ink);
+  margin-bottom: var(--space-md);
+  animation: soften-in 0.6s var(--ease-soft) 0.1s both;
+}
+
+.message {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--color-ink-light);
+  margin-bottom: var(--space-xl);
+  animation: soften-in 0.6s var(--ease-soft) 0.2s both;
+}
+
+.details {
+  margin-bottom: var(--space-xl);
+  text-align: left;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  animation: soften-in 0.6s var(--ease-soft) 0.3s both;
+}
+
+.details summary {
+  font-family: var(--font-ui);
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+  cursor: pointer;
+  user-select: none;
+}
+
+.errorInfo {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  background: rgba(184, 92, 79, 0.1);
+  border-radius: var(--radius-sm);
+  font-family: monospace;
+  font-size: var(--text-small);
+  color: var(--color-error);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.digest {
+  margin-top: var(--space-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-label);
+  color: var(--color-ink-light);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-xl);
+  animation: soften-in 0.6s var(--ease-soft) 0.4s both;
+}
+
+.contact {
+  font-size: var(--text-small);
+  color: var(--color-ink-light);
+  animation: soften-in 0.6s var(--ease-soft) 0.5s both;
+}
+
+.link {
+  color: var(--color-sage-dark);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@keyframes soften-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

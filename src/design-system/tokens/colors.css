@@ -1,24 +1,125 @@
+/* ═════════════════════════════════════════════════════════════════════════════
+   The Wild Dandelion Collective — Color Tokens
+   Warm, vibrant, futuristic, playful palette
+   ═════════════════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Surfaces */
-  --color-parchment: #F7F3E9;
-  --color-parchment-dark: #EDE6D6;
-
-  /* Brand */
-  --color-sage: #8FA68E;
-  --color-sage-dark: #6B826B;
-  --color-terracotta: #C17A5C;
-  --color-golden: #D4A574;
-
-  /* Text */
-  --color-ink: #2C2420;
-  --color-ink-light: #5C5348;
-
-  /* Status */
-  --color-success: #7A9E7E;
-  --color-warning: #D4A574;
-  --color-error: #B85C4F;
-
-  /* Derived */
-  --color-line: rgba(44, 36, 32, 0.1);
-  --color-overlay: rgba(44, 36, 32, 0.4);
+  /* ── Base Colors ─────────────────────────────────────────────────────────── */
+  
+  /* Creamy backgrounds - warm and inviting */
+  --color-cream: #FFFBF5;
+  --color-cream-warm: #FFF8F0;
+  --color-cream-dark: #F5EDE3;
+  
+  /* Primary accent - Living Coral */
+  --color-coral: #FF6B6B;
+  --color-coral-light: #FF8E8E;
+  --color-coral-dark: #E85555;
+  --color-coral-soft: rgba(255, 107, 107, 0.15);
+  
+  /* Secondary accent - Soft Mint */
+  --color-mint: #4ECDC4;
+  --color-mint-light: #6EDDD6;
+  --color-mint-dark: #3DBDB5;
+  --color-mint-soft: rgba(78, 205, 196, 0.15);
+  
+  /* Tertiary accent - Lavender */
+  --color-lavender: #A78BFA;
+  --color-lavender-light: #C4B5FD;
+  --color-lavender-dark: #8B5CF6;
+  --color-lavender-soft: rgba(167, 139, 250, 0.15);
+  
+  /* Warm accents */
+  --color-sunshine: #FFD93D;
+  --color-sunshine-soft: rgba(255, 217, 61, 0.2);
+  
+  /* Text colors */
+  --color-ink: #1A1A2E;
+  --color-ink-light: #4A4A6A;
+  --color-ink-lighter: #7A7A9A;
+  
+  /* Neutrals */
+  --color-white: #FFFFFF;
+  --color-white-soft: rgba(255, 255, 255, 0.8);
+  --color-white-softer: rgba(255, 255, 255, 0.6);
+  
+  /* Status colors */
+  --color-success: #10B981;
+  --color-success-soft: rgba(16, 185, 129, 0.15);
+  --color-warning: #F59E0B;
+  --color-warning-soft: rgba(245, 158, 11, 0.15);
+  --color-error: #EF4444;
+  --color-error-soft: rgba(239, 68, 68, 0.15);
+  
+  /* ── Gradients ───────────────────────────────────────────────────────────── */
+  
+  /* Hero gradient - warm sunrise */
+  --gradient-hero: linear-gradient(135deg, #FFFBF5 0%, #FFF0E6 50%, #FFE4D6 100%);
+  
+  /* Coral glow */
+  --gradient-coral: linear-gradient(135deg, #FF6B6B 0%, #FF8E8E 100%);
+  
+  /* Mint fresh */
+  --gradient-mint: linear-gradient(135deg, #4ECDC4 0%, #6EDDD6 100%);
+  
+  /* Lavender dream */
+  --gradient-lavender: linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%);
+  
+  /* Sunset - playful and warm */
+  --gradient-sunset: linear-gradient(135deg, #FF6B6B 0%, #FFD93D 50%, #4ECDC4 100%);
+  
+  /* Soft glow - for cards */
+  --gradient-glow: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%);
+  
+  /* Warm ambient */
+  --gradient-warm: linear-gradient(180deg, #FFFBF5 0%, #FFF5EB 100%);
+  
+  /* ── Glass Effects ───────────────────────────────────────────────────────── */
+  
+  /* Glass morphism backgrounds */
+  --glass-white: rgba(255, 255, 255, 0.7);
+  --glass-cream: rgba(255, 251, 245, 0.8);
+  --glass-coral: rgba(255, 107, 107, 0.1);
+  --glass-mint: rgba(78, 205, 196, 0.1);
+  
+  /* Glass borders */
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-border-strong: rgba(255, 255, 255, 0.8);
+  
+  /* ── Shadows ─────────────────────────────────────────────────────────────── */
+  
+  /* Soft glow shadows */
+  --shadow-coral: 0 8px 32px rgba(255, 107, 107, 0.25);
+  --shadow-mint: 0 8px 32px rgba(78, 205, 196, 0.25);
+  --shadow-lavender: 0 8px 32px rgba(167, 139, 250, 0.25);
+  
+  /* Elevation shadows */
+  --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
+  --shadow-md: 0 4px 16px rgba(26, 26, 46, 0.08);
+  --shadow-lg: 0 8px 32px rgba(26, 26, 46, 0.12);
+  --shadow-xl: 0 16px 48px rgba(26, 26, 46, 0.16);
+  
+  /* Inner glow */
+  --shadow-inner: inset 0 2px 8px rgba(255, 255, 255, 0.5);
+  --shadow-inner-warm: inset 0 2px 12px rgba(255, 217, 61, 0.15);
+  
+  /* ── Borders & Lines ─────────────────────────────────────────────────────── */
+  
+  --color-line: rgba(26, 26, 46, 0.08);
+  --color-line-light: rgba(26, 26, 46, 0.04);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-xl: 36px;
+  --radius-pill: 100px;
+  
+  /* ── Interactive States ──────────────────────────────────────────────────── */
+  
+  --hover-lift: translateY(-4px);
+  --hover-scale: scale(1.02);
+  --press-scale: scale(0.98);
+  
+  /* Focus rings */
+  --focus-coral: 0 0 0 3px rgba(255, 107, 107, 0.3);
+  --focus-mint: 0 0 0 3px rgba(78, 205, 196, 0.3);
 }

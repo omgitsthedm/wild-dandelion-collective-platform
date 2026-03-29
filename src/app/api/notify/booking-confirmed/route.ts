@@ -1,90 +1,110 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { sendEmail } from '@/lib/integrations/email';
-import { sendSms } from '@/lib/integrations/sms';
+import { NextResponse } from 'next/server';
+import { sendBookingConfirmation } from '@/lib/integrations/email';
+import { sendBookingConfirmationSms, alertNewBooking } from '@/lib/integrations/sms';
 import { getDb } from '@/lib/db';
+import { randomUUID } from 'crypto';
 
-export async function POST(request: NextRequest) {
+/**
+ * POST /api/notify/booking-confirmed
+ * 
+ * Sends booking confirmation to client and alert to Ashley.
+ * Logs notification for audit.
+ */
+export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { bookingId, clientName, clientEmail, clientPhone, serviceName, dateTime, location } =
-      body;
+    const {
+      bookingId,
+      customerEmail,
+      customerPhone,
+      customerName,
+      serviceName,
+      date,
+      time,
+    } = body;
 
-    if (!bookingId || !clientEmail) {
+    // Validate required fields
+    if (!customerEmail || !customerName || !serviceName || !date || !time) {
       return NextResponse.json(
-        { error: 'bookingId and clientEmail are required' },
-        { status: 400 },
+        { success: false, error: 'Missing required fields' },
+        { status: 400 }
       );
     }
 
-    const formattedDate = dateTime
-      ? new Date(dateTime).toLocaleDateString('en-US', {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: '2-digit',
-          timeZone: 'America/Denver',
-        })
-      : 'your scheduled time';
+    const notificationId = randomUUID();
+    const results = {
+      email: { success: false, error: null as string | null },
+      sms: { success: false, error: null as string | null },
+      ashleyAlert: { success: false, error: null as string | null },
+    };
 
-    // --- Send confirmation email ---
-    const emailResult = await sendEmail({
-      to: clientEmail,
-      subject: `Booking Confirmed — ${serviceName || 'Your Appointment'} with The Wild Dandelion`,
-      html: `
-        <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2d2d2d;">
-          <h1 style="font-size: 22px; color: #4a6741;">You're all set, ${clientName || 'there'}!</h1>
-          <p>Your booking has been confirmed:</p>
-          <table style="width: 100%; border-collapse: collapse; margin: 16px 0;">
-            <tr><td style="padding: 8px 0; color: #777;">Service</td><td style="padding: 8px 0;">${serviceName || 'Consultation'}</td></tr>
-            <tr><td style="padding: 8px 0; color: #777;">Date &amp; Time</td><td style="padding: 8px 0;">${formattedDate}</td></tr>
-            ${location ? `<tr><td style="padding: 8px 0; color: #777;">Location</td><td style="padding: 8px 0;">${location}</td></tr>` : ''}
-          </table>
-          <p style="margin-top: 24px; font-size: 14px; color: #777;">
-            Need to reschedule? Reply to this email or call us directly.
-          </p>
-          <p style="margin-top: 32px; font-size: 13px; color: #aaa;">— The Wild Dandelion Collective</p>
-        </div>
-      `,
+    // Send email confirmation
+    const emailResult = await sendBookingConfirmation({
+      to: customerEmail,
+      customerName,
+      serviceName,
+      date,
+      time,
+      bookingId,
     });
+    results.email.success = emailResult.success;
+    results.email.error = emailResult.error || null;
 
-    // --- Send confirmation SMS ---
-    let smsResult = { success: false, placeholder: true };
-    if (clientPhone) {
-      smsResult = await sendSms({
-        to: clientPhone,
-        body: `Confirmed! ${serviceName || 'Your appointment'} with The Wild Dandelion on ${formattedDate}. Reply HELP for questions.`,
+    // Send SMS confirmation (if phone provided)
+    if (customerPhone) {
+      const smsResult = await sendBookingConfirmationSms({
+        to: customerPhone,
+        customerName,
+        serviceName,
+        date,
+        time,
       });
+      results.sms.success = smsResult.success;
+      results.sms.error = smsResult.error || null;
     }
 
-    // --- Log to notification_log ---
-    try {
-      const db = getDb();
-      const id = crypto.randomUUID();
-      await db.execute({
-        sql: `INSERT INTO notification_log (id, type, recipient, subject, status, related_id, sent_at)
-              VALUES (?, ?, ?, ?, ?, ?, datetime('now'))`,
-        args: [
-          id,
-          'booking_confirmed',
-          clientEmail,
-          `Booking Confirmed — ${serviceName || 'Appointment'}`,
-          emailResult.success ? 'sent' : 'failed',
-          bookingId,
-        ],
-      });
-    } catch (dbError) {
-      console.warn('[NOTIFY] Could not log to notification_log:', dbError);
-    }
+    // Send alert to Ashley
+    const ashleyResult = await alertNewBooking({
+      customerName,
+      serviceName,
+      date,
+      time,
+    });
+    results.ashleyAlert.success = ashleyResult.success;
+    results.ashleyAlert.error = ashleyResult.error || null;
+
+    // Log to notification_log
+    const db = getDb();
+    await db.execute({
+      sql: `
+        INSERT INTO notification_log (
+          id, type, recipient, subject, status, related_id, sent_at, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+      `,
+      args: [
+        notificationId,
+        'booking_confirmed',
+        customerEmail,
+        `Booking confirmation: ${serviceName}`,
+        results.email.success ? 'sent' : 'failed',
+        bookingId || null,
+      ],
+    });
 
     return NextResponse.json({
       success: true,
-      email: { sent: emailResult.success, placeholder: emailResult.placeholder },
-      sms: { sent: smsResult.success, placeholder: smsResult.placeholder },
+      notificationId,
+      results,
     });
   } catch (error) {
-    console.error('[NOTIFY] booking-confirmed error:', error);
-    return NextResponse.json({ error: 'Failed to send booking confirmation' }, { status: 500 });
+    console.error('[notify/booking-confirmed] Error:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: 'Failed to send notifications',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
   }
 }

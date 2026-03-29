@@ -1,0 +1,3 @@
+module.exports=[17640,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)(b.Fragment,{children:a})},"metadata",0,{title:"Services | The Wild Dandelion Collective",description:"Explore our hair services — from lived-in blonde and signature color to precision cutting, extensions, treatments, and bridal styling. Book your transformation today."}])},21460,a=>{a.n(a.i(17640))}];
+
+//# sourceMappingURL=src_app_%28public%29_services_layout_tsx_046kcps._.js.map

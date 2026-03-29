@@ -13,8 +13,14 @@
 
 .block {
   border-radius: var(--radius-md);
-  background: var(--color-parchment-dark);
-  animation: pulse 1.8s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--color-parchment-dark) 0%,
+    rgba(143, 166, 142, 0.15) 50%,
+    var(--color-parchment-dark) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
 }
 
 .heroBlock {
@@ -42,14 +48,62 @@
   border-radius: var(--radius-lg);
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.7; }
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Page transition overlay */
+.pageTransition {
+  position: fixed;
+  inset: 0;
+  background: var(--color-parchment);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-out 0.3s ease 0.5s forwards;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-parchment-dark);
+  border-top-color: var(--color-sage);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .block {
     animation: none;
+    background: var(--color-parchment-dark);
     opacity: 0.5;
+  }
+  
+  .spinner {
+    animation: none;
+  }
+  
+  .pageTransition {
+    animation: none;
+    opacity: 0;
   }
 }

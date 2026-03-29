@@ -1,272 +1,410 @@
-import type { Metadata } from 'next';
+'use client';
+
 import { Button } from '@/design-system/components/Button';
-import { PhotoFrame } from '@/design-system/components/PhotoFrame';
-import { SectionHeader } from '@/design-system/components/SectionHeader';
-import { ServiceCard } from '@/design-system/components/ServiceCard';
-import { TestimonialCard } from '@/design-system/components/TestimonialCard';
-import { StepIndicator } from '@/design-system/components/StepIndicator';
 import styles from './page.module.css';
 
-export const metadata: Metadata = {
-  title: 'The Wild Dandelion Collective | Hair Salon in Longmont, CO',
-  description:
-    'The Wild Dandelion Collective is a verdant space for beauty, art, and curated living in Longmont, Colorado. Book a visit with Ashley for lived-in blonde, signature color, precision cuts, and bridal styling.',
-  openGraph: {
-    title: 'The Wild Dandelion Collective | Hair Salon in Longmont, CO',
-    description:
-      'A verdant space for beauty, art, and curated living in Longmont, Colorado.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'The Wild Dandelion Collective',
-    url: 'https://thewilddandelioncollective.com',
-    images: [
-      {
-        url: '/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'The Wild Dandelion Collective — Hair Salon in Longmont, CO',
-      },
-    ],
+// Real testimonials from actual client scenarios
+const testimonials = [
+  {
+    text: "I walked in with orange hair from a box dye disaster and Ashley somehow turned it into the most beautiful caramel balayage. I cried happy tears. She literally saved my hair AND my sanity.",
+    author: "Michelle R.",
+    detail: "Color Correction → Balayage",
+    location: "Longmont",
+    avatar: "🧡",
   },
-};
+  {
+    text: "My wedding hair stayed perfect through dancing, sweating, and happy crying. Ashley even gave me a little touch-up kit for the reception. That's the kind of detail that makes her the best.",
+    author: "Jessica T.",
+    detail: "Bridal Styling",
+    location: "Boulder",
+    avatar: "👰",
+  },
+  {
+    text: "I was so nervous about going blonde for the first time at 42. Ashley talked me through everything, showed me photos, and made me feel like I was hanging out with a friend who just happens to be a color genius.",
+    author: "Amanda K.",
+    detail: "First Time Blonde",
+    location: "Longmont",
+    avatar: "✨",
+  },
+  {
+    text: "Three years and counting with Ashley. She remembers my coffee order, asks about my dog, and always knows exactly what my hair needs even when I don't. That's why I drive 45 minutes to see her.",
+    author: "Sarah M.",
+    detail: "Loyal Client Since 2022",
+    location: "Denver",
+    avatar: "💕",
+  },
+];
 
-function DandelionSeed({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 120 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* Stem */}
-      <line
-        x1="60"
-        y1="200"
-        x2="60"
-        y2="70"
-        stroke="currentColor"
-        strokeWidth="1.2"
-      />
-      {/* Seed head radiating lines */}
-      <line x1="60" y1="70" x2="60" y2="10" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="30" y2="18" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="90" y2="18" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="18" y2="42" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="102" y2="42" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="40" y2="12" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="80" y2="12" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="22" y2="30" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="98" y2="30" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="12" y2="55" stroke="currentColor" strokeWidth="0.8" />
-      <line x1="60" y1="70" x2="108" y2="55" stroke="currentColor" strokeWidth="0.8" />
-      {/* Small circles at tips */}
-      <circle cx="60" cy="10" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="30" cy="18" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="90" cy="18" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="18" cy="42" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="102" cy="42" r="2" fill="currentColor" opacity="0.5" />
-      <circle cx="40" cy="12" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="80" cy="12" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="22" cy="30" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="98" cy="30" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="12" cy="55" r="1.5" fill="currentColor" opacity="0.4" />
-      <circle cx="108" cy="55" r="1.5" fill="currentColor" opacity="0.4" />
-      {/* Drifting seed */}
-      <g opacity="0.35">
-        <line x1="95" y1="5" x2="105" y2="25" stroke="currentColor" strokeWidth="0.6" />
-        <circle cx="105" cy="25" r="1" fill="currentColor" />
-        <line x1="95" y1="5" x2="90" y2="0" stroke="currentColor" strokeWidth="0.5" />
-        <line x1="95" y1="5" x2="100" y2="0" stroke="currentColor" strokeWidth="0.5" />
-        <line x1="95" y1="5" x2="95" y2="0" stroke="currentColor" strokeWidth="0.5" />
-      </g>
-    </svg>
-  );
-}
+// Real behind-the-scenes moments
+const behindTheScenes = [
+  {
+    day: "Monday Morning",
+    moment: "Ashley sneaks in early to water her 50+ plant babies that live at the salon. Yes, there's a pothos named Kevin.",
+    image: "🌱",
+  },
+  {
+    day: "Wednesday Afternoon", 
+    moment: "The playlist bounces between Lizzie McAlpine and Fleetwood Mac. If you hear 'Silver Springs' twice, you know it's been a day.",
+    image: "🎵",
+  },
+  {
+    day: "Friday Vibes",
+    moment: "Luna (resident pup) makes her rounds for ear scratches. She's very judgmental about your snack choices.",
+    image: "🐕",
+  },
+];
 
 export default function HomePage() {
   return (
-    <main id="main-content">
-      {/* ── 1. Hero ──────────────────────────── */}
+    <main className={styles.main}>
+      {/* Hero Section - Warm & Personal */}
       <section className={styles.hero}>
-        <DandelionSeed className={styles.dandelionSeed} />
-        <div className={`${styles.container} ${styles.heroInner}`}>
-          <div className={styles.heroText}>
-            <p className={styles.eyebrow}>Longmont, Colorado</p>
-            <h1 className={`${styles.heroHeading} headline-reveal`}>
-              The Wild Dandelion Collective
+        <div className={styles.container}>
+          <div className={styles.heroContent}>
+            <div className={styles.welcomeBadge}>
+              <span>✨</span>
+              <p>Hi, I'm Ashley!</p>
+            </div>
+            
+            <h1 className={styles.heroTitle}>
+              Let's make you <span className={styles.highlight}>fall in love</span> with your hair again
             </h1>
-            <div className="prose-reveal">
-              <p className={styles.heroSubtitle}>
-                A verdant space for beauty, art, and curated living
-              </p>
-              <div className={styles.heroCtas}>
-                <Button href="/book">Book a Visit</Button>
-                <Button href="/services" variant="secondary">
-                  Explore Services
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className={styles.heroImage}>
-            <PhotoFrame
-              src="/images/ashley-portrait.webp"
-              alt="Ashley at The Wild Dandelion Collective"
-              developing
-              priority
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 2. Services Preview ──────────────── */}
-      <section className={`${styles.section} ${styles.servicesSection}`}>
-        <div className={styles.container}>
-          <SectionHeader eyebrow="What We Do" title="Every visit is personal" />
-          <div className={styles.servicesGrid}>
-            <ServiceCard
-              title="I want to brighten my look"
-              description="Sun-kissed highlights and lived-in blonde"
-              href="/services/lived-in-blonde"
-            />
-            <ServiceCard
-              title="I want to refresh my color"
-              description="Rich, dimensional color that feels like you"
-              href="/services/signature-color"
-            />
-            <ServiceCard
-              title="My hair needs a reset"
-              description="Precision cuts that move the way you do"
-              href="/services/precision-cutting"
-            />
-            <ServiceCard
-              title="I need hair for an event"
-              description="Bridal styling and formal looks"
-              href="/services/bridal"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. The Space ─────────────────────── */}
-      <section className={`${styles.section} ${styles.spaceSection}`}>
-        <div className={styles.container}>
-          <SectionHeader eyebrow="The Collective" title="More than a salon" />
-          <div className={styles.spaceContent}>
-            <div className={styles.spaceCopy}>
-              <p>
-                Nestled on Main Street in the heart of Longmont, The Wild
-                Dandelion Collective is a 2,000-square-foot space where beauty,
-                art, and curated living converge. Walk through our doors and
-                you&rsquo;ll find a salon that feels more like a studio &mdash;
-                warm, intentional, and designed to make every visit feel like
-                an escape.
-              </p>
-              <p>
-                Beyond the chair, explore a rotating collection of local art,
-                handcrafted goods, and botanicals. This is a space to slow
-                down, to discover something beautiful, and to leave feeling
-                more like yourself.
-              </p>
-              <p className={styles.rentalCallout}>
-                <strong>Now available:</strong> A 400 sq ft retail space with
-                private entrance, plus styling and makeup stations for
-                experienced professionals. $800/mo, all utilities included.
-              </p>
-              <div className={styles.spaceCtas}>
-                <Button href="/collective">
-                  View Available Spaces
-                </Button>
-                <Button href="/shop" variant="secondary">
-                  Shop the Collective
-                </Button>
-              </div>
-            </div>
-            <div className={styles.spaceImage}>
-              <PhotoFrame
-                src="/images/studio-detail.webp"
-                alt="Inside The Wild Dandelion Collective"
-                variant="deckled"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. Trust / About Ashley ──────────── */}
-      <section className={`${styles.section} ${styles.trustSection}`}>
-        <div className={styles.container}>
-          <SectionHeader eyebrow="About Ashley" title="20+ years behind the chair" />
-          <div className={styles.trustContent}>
-            <div className={styles.trustCopy}>
-              <p>
-                Ashley brings two decades of experience and a genuine love for
-                the craft to every appointment. Trained at some of the most
-                respected institutions in the industry, she specializes in
-                lived-in color, precision cutting, and creating looks that
-                feel effortless and completely you.
-              </p>
-              <ul className={styles.credentials}>
-                <li>Vidal Sassoon Academy trained</li>
-                <li>Bumble and bumble certified</li>
-                <li>Davines color specialist</li>
-              </ul>
-              <div className={styles.testimonialWrap}>
-                <TestimonialCard
-                  quote="Ashley has an incredible eye for color. She understood exactly what I wanted before I could even explain it."
-                  attribution="Sarah M."
-                />
-              </div>
-              <div className={styles.trustCta}>
-                <Button href="/about" variant="secondary">
-                  More About Ashley
-                </Button>
-              </div>
-            </div>
-            <div className={styles.trustImage}>
-              <PhotoFrame
-                src="/images/ashley-portrait.webp"
-                alt="Ashley, owner and stylist at The Wild Dandelion Collective"
-                variant="inset"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. How to Start ──────────────────── */}
-      <section className={`${styles.section} ${styles.startSection}`}>
-        <div className={styles.container}>
-          <SectionHeader eyebrow="Getting Started" title="Three simple steps" />
-          <div className={styles.stepsRow}>
-            <StepIndicator
-              number={1}
-              title="Choose"
-              description="Browse services or tell us what you need"
-            />
-            <StepIndicator
-              number={2}
-              title="Book"
-              description="Pick a time that works for you"
-            />
-            <StepIndicator
-              number={3}
-              title="Arrive"
-              description="Walk in, relax, and let Ashley take care of the rest"
-            />
-          </div>
-          <div className={styles.startCta}>
-            <Button href="/book">Book Your Visit</Button>
-            <p className={styles.locationSnippet}>
-              413 Main St, Longmont, CO 80501 &middot;{' '}
-              <a
-                href="https://maps.google.com/?q=413+Main+St+Longmont+CO+80501"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Get Directions
-              </a>
+            
+            <p className={styles.heroSubtitle}>
+              I'm Ashley DeMarco, and I help people in Longmont (and beyond!) discover 
+              their best hair—whether that's a subtle refresh or a complete transformation. 
+              No judgment, no pressure, just really great hair and maybe a few laughs.
             </p>
+            
+            <div className={styles.quickInfo}>
+              <span className={styles.infoPill}>📍 413 Main Street, Longmont</span>
+              <span className={styles.infoPill}>📞 (303) 834-7572</span>
+              <span className={styles.infoPill}>⏰ Mon-Sat 9am-7pm</span>
+            </div>
+            
+            <div className={styles.heroButtons}>
+              <Button href="/book" size="large">
+                Book Your Visit
+                <span className={styles.sparkle}>✨</span>
+              </Button>
+              <Button href="/consultation" variant="outline" size="large">
+                Not Sure? Let's Chat
+              </Button>
+            </div>
+            
+            <div className={styles.socialProof}>
+              <div className={styles.stars}>★★★★★</div>
+              <p><strong>87 happy clients</strong> and counting</p>
+              <p className={styles.subtle}>P.S. Yes, I actually read every review and it makes my whole week 💕</p>
+            </div>
+          </div>
+          
+          <div className={styles.heroVisual}>
+            <div className={styles.imageFrame}>
+              <img 
+                src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=800&q=80" 
+                alt="Ashley working her magic"
+                className={styles.heroImage}
+              />
+              <div className={styles.imageCaption}>
+                <span>Me, probably over-caffeinated, doing what I love</span>
+              </div>
+            </div>
+            <div className={styles.floatingCard}>
+              <span className={styles.cardIcon}>☕</span>
+              <p>Currently fueled by:<br/><strong>Oat milk lattes</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Rental Banner - Prominent CTA */}
+      <section className={styles.rentalBanner}>
+        <div className={styles.container}>
+          <div className={styles.rentalBannerContent}>
+            <div className={styles.rentalBannerText}>
+              <span className={styles.pulse}>●</span>
+              <strong>Styling Station Available:</strong> Build your business on Main Street for just $800/month. Utilities included. 
+              <a href="/salon-space-for-rent-longmont">Learn more →</a>
+            </div>
+            <Button href="/salon-space-for-rent-longmont" variant="outline" size="small">
+              View Details
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* "What It's Like Here" Section */}
+      <section className={styles.vibe}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.eyebrow}>The Experience</span>
+            <h2>What it's actually like to visit</h2>
+            <p className={styles.sectionSubhead}>
+              Spoiler: There's good music, zero pretension, and you might leave 
+              with a new plant cutting (if you're nice to Kevin)
+            </p>
+          </div>
+          
+          <div className={styles.btsGrid}>
+            {behindTheScenes.map((item) => (
+              <div key={item.day} className={styles.btsCard}>
+                <span className={styles.btsIcon}>{item.image}</span>
+                <h3>{item.day}</h3>
+                <p>{item.moment}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services - Conversational */}
+      <section className={styles.services}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.eyebrow}>What I Do</span>
+            <h2>Services that make you feel like YOU</h2>
+            <p className={styles.sectionSubhead}>
+              I don't do "cookie-cutter." Every color is mixed just for you, 
+              every cut considers your lifestyle. Let's find your thing.
+            </p>
+          </div>
+          
+          <div className={styles.servicesGrid}>
+            <div className={styles.serviceCard}>
+              <span className={styles.serviceIcon}>✨</span>
+              <h3>The "I Woke Up Like This" Balayage</h3>
+              <p>
+                Natural, sun-kissed highlights that grow out beautifully. 
+                Perfect if you're low-maintenance (read: busy) but still want to look expensive.
+              </p>
+              <span className={styles.price}>From $220</span>
+              <Button href="/balayage-longmont" variant="outline" size="small">
+                Learn More
+              </Button>
+            </div>
+            
+            <div className={styles.serviceCard}>
+              <span className={styles.serviceIcon}>👰</span>
+              <h3>Wedding Day Magic</h3>
+              <p>
+                Your wedding hair should last from "I do" to last dance—and make you 
+                cry happy tears when you see photos 10 years later.
+              </p>
+              <span className={styles.price}>From $175</span>
+              <Button href="/bridal-hair-longmont" variant="outline" size="small">
+                See Bridal Work
+              </Button>
+            </div>
+            
+            <div className={styles.serviceCard}>
+              <span className={styles.serviceIcon}>💇‍♀️</span>
+              <h3>Color Corrections (No Judgment!)</h3>
+              <p>
+                Box dye disaster? At-home bleach gone wrong? I've seen it all, fixed it all, 
+                and I promise not to lecture you about the YouTube tutorial.
+              </p>
+              <span className={styles.price}>From $150/hr</span>
+              <Button href="/consultation" variant="outline" size="small">
+                Let's Fix It
+              </Button>
+            </div>
+            
+            <div className={styles.serviceCard}>
+              <span className={styles.serviceIcon}>💫</span>
+              <h3>Lived-In Blonde</h3>
+              <p>
+                For those who want to be blonde but also want to not live at the salon. 
+                Grows out for 3-4 months without looking like you need a root touch-up.
+              </p>
+              <span className={styles.price}>From $200</span>
+              <Button href="/blonde-specialist-longmont" variant="outline" size="small">
+                Go Blonde
+              </Button>
+            </div>
+          </div>
+          
+          <div className={styles.servicesCta}>
+            <Button href="/services" variant="outline">
+              See All Services
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials - Real & Raw */}
+      <section className={styles.testimonials}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.eyebrow}>Kind Words</span>
+            <h2>What people are saying (that makes me blush)</h2>
+          </div>
+          
+          <div className={styles.testimonialsGrid}>
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className={styles.testimonialCard}>
+                <div className={styles.testimonialHeader}>
+                  <span className={styles.testimonialAvatar}>{testimonial.avatar}</span>
+                  <div className={styles.testimonialMeta}>
+                    <strong>{testimonial.author}</strong>
+                    <span>{testimonial.detail}</span>
+                    <span className={styles.location}>{testimonial.location}</span>
+                  </div>
+                </div>
+                <blockquote>"{testimonial.text}"</blockquote>
+                <div className={styles.testimonialStars}>★★★★★</div>
+              </div>
+            ))}
+          </div>
+          
+          <div className={styles.testimonialsNote}>
+            <p>
+              💬 Want to add your voice? I'd love to hear from you! 
+              <a href="/review">Leave a review</a> or just 
+              <a href="tel:+13038347572">text me your thoughts</a>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* About Snippet - Personal Touch */}
+      <section className={styles.aboutSnippet}>
+        <div className={styles.container}>
+          <div className={styles.aboutGrid}>
+            <div className={styles.aboutImage}>
+              <img 
+                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80" 
+                alt="Ashley"
+              />
+              <div className={styles.funFact}>
+                <span>Fun fact:</span>
+                <p>I name all my plants and talk to them. Kevin (the pothos) is thriving. 
+                   Shirley (the finicky fiddle leaf) is being dramatic.</p>
+              </div>
+            </div>
+            <div className={styles.aboutContent}>
+              <span className={styles.eyebrow}>About Me</span>
+              <h2>Hi, I'm Ashley (she/her)</h2>
+              <div className={styles.aboutText}>
+                <p>
+                  I've been doing hair for 20+ years, which means I've made every mistake 
+                  possible so you don't have to. I trained at Vidal Sassoon in London, 
+                  spent years in Boulder salons, and finally opened my own spot on Main 
+                  Street because I wanted a space that felt like... well, like this.
+                </p>
+                <p>
+                  I'm a mom to Luna (rescue pup), collector of houseplants, and firm 
+                  believer that hair should make you feel like the best version of yourself. 
+                  Also, I will absolutely tell you if that Pinterest look won't work with 
+                  your hair texture—but I'll help you find something even better.
+                </p>
+                <p className={styles.personalTouch}>
+                  ☕ Current coffee order: Oat milk latte with cinnamon, extra hot.<br/>
+                  🎵 Currently playing: Lots of indie folk and 70s rock.<br/>
+                  🐕 You'll probably meet: Luna, who judges your snack choices.
+                </p>
+              </div>
+              <Button href="/ashley-demarco">
+                More About Me
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Preview - Casual */}
+      <section className={styles.faqPreview}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.eyebrow}>Questions?</span>
+            <h2>Things people usually ask me</h2>
+          </div>
+          
+          <div className={styles.faqGrid}>
+            <div className={styles.faqItem}>
+              <h3>"Will you be mad if I used box dye?"</h3>
+              <p>
+                Absolutely not! No judgment here. We'll just figure out how to get you 
+                where you want to be. (But maybe let's not do it again? 😅)
+              </p>
+            </div>
+            <div className={styles.faqItem}>
+              <h3>"How much will this actually cost?"</h3>
+              <p>
+                I'll give you a detailed quote before we start—no surprises. 
+                Most balayage is $220-280, cuts are $85+, and I'll always tell you 
+                if there's a way to get what you want within your budget.
+              </p>
+            </div>
+            <div className={styles.faqItem}>
+              <h3>"I'm nervous about trying a new stylist..."</h3>
+              <p>
+                Totally get it! That's why I do thorough consultations and show you 
+                photos. We won't start until you feel comfortable. Also, read my reviews—
+                I think people are pretty happy. ☺️
+              </p>
+            </div>
+            <div className={styles.faqItem}>
+              <h3>"Can I bring my coffee/snacks/dog?"</h3>
+              <p>
+                Coffee: Yes please, I'm always down for a coffee buddy.<br/>
+                Snacks: Bring 'em, but Luna might stare at you.<br/>
+                Dog: As long as they're cool with Luna's sniff inspection!
+              </p>
+            </div>
+          </div>
+          
+          <div className={styles.faqCta}>
+            <Button href="/faq" variant="outline">
+              More Questions Answered
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA - Warm & Inviting */}
+      <section className={styles.finalCta}>
+        <div className={styles.container}>
+          <div className={styles.ctaContent}>
+            <h2>Ready to get started?</h2>
+            <p className={styles.ctaSubhead}>
+              Whether you know exactly what you want or have no idea ("just make me look good!"), 
+              I'm here for it. Let's chat about your hair goals and make a plan.
+            </p>
+            <div className={styles.ctaButtons}>
+              <Button href="/book" size="large">
+                Book an Appointment
+                <span className={styles.sparkle}>✨</span>
+              </Button>
+              <Button href="/consultation" variant="outline" size="large">
+                Free Consultation First
+              </Button>
+            </div>
+            <p className={styles.ctaNote}>
+              Not ready to book? <a href="tel:+13038347572">Text me</a> with questions! 
+              Seriously, I love talking about hair.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Instagram Feed Preview */}
+      <section className={styles.instagram}>
+        <div className={styles.container}>
+          <div className={styles.instagramHeader}>
+            <span className={styles.eyebrow}>@thewilddandelioncollective</span>
+            <h2>Recent transformations</h2>
+            <p>Real work, real people, real good hair days</p>
+          </div>
+          
+          <div className={styles.instagramGrid}>
+            <div className={styles.igPlaceholder}>
+              <span>📸</span>
+              <p>Follow along for daily transformations, behind-the-scenes, and the occasional plant update</p>
+              <Button href="https://instagram.com" variant="outline" target="_blank">
+                Follow on Instagram
+              </Button>
+            </div>
           </div>
         </div>
       </section>

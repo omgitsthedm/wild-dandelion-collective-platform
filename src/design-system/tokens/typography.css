@@ -1,41 +1,86 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Source+Serif+4:wght@400;600&family=Inter:wght@400;500;600&family=Caveat:wght@400&display=swap');
+/* ═════════════════════════════════════════════════════════════════════════════
+   The Wild Dandelion Collective — Typography Tokens
+   Playful, modern, warm typography
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
 :root {
-  --font-heading: 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
-  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-accent: 'Caveat', cursive;
-
-  --text-hero: 30px;
-  --text-h1: 28px;
-  --text-h2: 22px;
-  --text-h3: 16px;
-  --text-body: 16px;
-  --text-small: 13px;
-  --text-label: 11px;
-  --text-accent: 18px;
-
-  --leading-tight: 1.2;
-  --leading-normal: 1.65;
-  --leading-relaxed: 1.8;
-
-  --tracking-tight: -0.02em;
+  /* ── Font Families ───────────────────────────────────────────────────────── */
+  
+  /* Display - Playful, warm serif */
+  --font-display: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+  
+  /* Heading - Modern, friendly */
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  
+  /* Body - Clean, readable */
+  --font-body: 'Inter', 'SF Pro', system-ui, sans-serif;
+  
+  /* UI - Functional, clear */
+  --font-ui: 'Inter', system-ui, sans-serif;
+  
+  /* Accent - Fun, handwritten */
+  --font-accent: 'Caveat', 'Kalam', cursive;
+  
+  /* ── Type Scale (Fluid) ──────────────────────────────────────────────────── */
+  
+  /* Hero - Big, bold, fun */
+  --text-hero: clamp(3rem, 8vw + 1rem, 6rem);
+  --text-hero-line: 1.05;
+  
+  /* H1 - Large, impactful */
+  --text-h1: clamp(2.25rem, 5vw + 0.5rem, 3.5rem);
+  --text-h1-line: 1.1;
+  
+  /* H2 - Section headers */
+  --text-h2: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+  --text-h2-line: 1.2;
+  
+  /* H3 - Subsection */
+  --text-h3: clamp(1.375rem, 2vw + 0.25rem, 1.75rem);
+  --text-h3-line: 1.3;
+  
+  /* H4 - Card titles */
+  --text-h4: clamp(1.125rem, 1.5vw + 0.125rem, 1.375rem);
+  --text-h4-line: 1.4;
+  
+  /* Large body */
+  --text-large: 1.25rem;
+  --text-large-line: 1.6;
+  
+  /* Body - Standard */
+  --text-body: 1.0625rem;
+  --text-body-line: 1.7;
+  
+  /* Small - UI elements */
+  --text-small: 0.9375rem;
+  --text-small-line: 1.5;
+  
+  /* Tiny - Captions, labels */
+  --text-tiny: 0.8125rem;
+  --text-tiny-line: 1.4;
+  
+  /* ── Letter Spacing ──────────────────────────────────────────────────────── */
+  
+  --tracking-tight: -0.03em;
   --tracking-normal: 0;
-  --tracking-wide: 0.08em;
-}
-
-@media (min-width: 768px) {
-  :root {
-    --text-hero: 44px;
-    --text-h1: 36px;
-    --text-h2: 28px;
-  }
-}
-
-@media (min-width: 1024px) {
-  :root {
-    --text-hero: 52px;
-    --text-h1: 42px;
-    --text-h2: 32px;
-  }
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+  
+  /* ── Font Weights ────────────────────────────────────────────────────────── */
+  
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  
+  /* ── Typography Utilities ────────────────────────────────────────────────── */
+  
+  /* Gradient text effect */
+  --text-gradient-coral: linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-light) 100%);
+  --text-gradient-mint: linear-gradient(135deg, var(--color-mint) 0%, var(--color-mint-light) 100%);
+  --text-gradient-sunset: linear-gradient(135deg, var(--color-coral) 0%, var(--color-sunshine) 50%, var(--color-mint) 100%);
 }

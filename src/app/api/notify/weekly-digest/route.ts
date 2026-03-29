@@ -1,152 +1,145 @@
 import { NextResponse } from 'next/server';
-import { sendEmail } from '@/lib/integrations/email';
 import { getDb } from '@/lib/db';
-
-const ASHLEY_EMAIL = process.env.ASHLEY_EMAIL || '';
+import { sendWeeklyDigest } from '@/lib/integrations/email';
+import { randomUUID } from 'crypto';
 
 /**
  * GET /api/notify/weekly-digest
- * Scheduled function (Monday 8am MT = 15:00 UTC via Netlify cron).
- * Sends Ashley a weekly summary: bookings, revenue placeholder, new clients, pending items.
+ * 
+ * Scheduled function (Monday 8am MT) to send Ashley a weekly summary email.
  */
 export async function GET() {
-  if (!ASHLEY_EMAIL) {
-    console.log('[WEEKLY-DIGEST] ASHLEY_EMAIL not configured — skipping digest.');
-    return NextResponse.json({ success: true, placeholder: true, message: 'No ASHLEY_EMAIL set' });
-  }
-
   try {
     const db = getDb();
-
-    // Date range: last 7 days
-    const now = new Date();
-    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const weekAgoISO = weekAgo.toISOString();
-
-    // --- Gather stats ---
-    let bookingCount = 0;
-    let newConsultations = 0;
-    let newRentalInquiries = 0;
-    let pendingConsultations = 0;
-    let pendingRentals = 0;
-    let notificationsSent = 0;
-
-    try {
-      const consultResult = await db.execute({
-        sql: `SELECT COUNT(*) as count FROM consultations WHERE created_at >= ?`,
-        args: [weekAgoISO],
+    const ashleyEmail = process.env.ASHLEY_EMAIL;
+    
+    if (!ashleyEmail) {
+      console.log('[weekly-digest] ASHLEY_EMAIL not set, skipping');
+      return NextResponse.json({
+        success: true,
+        skipped: true,
+        reason: 'ASHLEY_EMAIL not configured',
       });
-      newConsultations = Number(consultResult.rows[0]?.count) || 0;
-
-      const pendingConsultResult = await db.execute({
-        sql: `SELECT COUNT(*) as count FROM consultations WHERE status = 'new'`,
-        args: [],
-      });
-      pendingConsultations = Number(pendingConsultResult.rows[0]?.count) || 0;
-
-      const rentalResult = await db.execute({
-        sql: `SELECT COUNT(*) as count FROM rental_inquiries WHERE created_at >= ?`,
-        args: [weekAgoISO],
-      });
-      newRentalInquiries = Number(rentalResult.rows[0]?.count) || 0;
-
-      const pendingRentalResult = await db.execute({
-        sql: `SELECT COUNT(*) as count FROM rental_inquiries WHERE status = 'new'`,
-        args: [],
-      });
-      pendingRentals = Number(pendingRentalResult.rows[0]?.count) || 0;
-
-      const notifResult = await db.execute({
-        sql: `SELECT COUNT(*) as count FROM notification_log WHERE created_at >= ?`,
-        args: [weekAgoISO],
-      });
-      notificationsSent = Number(notifResult.rows[0]?.count) || 0;
-    } catch (queryErr) {
-      console.warn('[WEEKLY-DIGEST] Some stats queries failed:', queryErr);
     }
 
-    // Booking count placeholder — requires Square sync
-    // bookingCount = ... (wire when Square bookings are synced)
+    // Calculate week boundaries (Monday to Sunday)
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday
+    const daysSinceMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+    
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - daysSinceMonday);
+    weekStart.setHours(0, 0, 0, 0);
+    
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+    weekEnd.setHours(23, 59, 59, 999);
 
-    const weekLabel = `${weekAgo.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} – ${now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+    const weekStartStr = weekStart.toISOString();
+    const weekEndStr = weekEnd.toISOString();
 
-    const emailResult = await sendEmail({
-      to: ASHLEY_EMAIL,
-      subject: `Wild Dandelion Weekly Digest — ${weekLabel}`,
-      html: `
-        <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; color: #2d2d2d;">
-          <h1 style="font-size: 22px; color: #4a6741;">Weekly Digest</h1>
-          <p style="color: #777; font-size: 14px;">${weekLabel}</p>
-
-          <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-            <tr style="border-bottom: 1px solid #e5e5e5;">
-              <td style="padding: 10px 0; font-weight: bold;">Bookings</td>
-              <td style="padding: 10px 0; text-align: right;">${bookingCount} <span style="color:#999;">(wire Square sync)</span></td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e5e5e5;">
-              <td style="padding: 10px 0; font-weight: bold;">New Consultations</td>
-              <td style="padding: 10px 0; text-align: right;">${newConsultations}</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e5e5e5;">
-              <td style="padding: 10px 0; font-weight: bold;">New Rental Inquiries</td>
-              <td style="padding: 10px 0; text-align: right;">${newRentalInquiries}</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #e5e5e5;">
-              <td style="padding: 10px 0; font-weight: bold;">Notifications Sent</td>
-              <td style="padding: 10px 0; text-align: right;">${notificationsSent}</td>
-            </tr>
-          </table>
-
-          ${
-            pendingConsultations + pendingRentals > 0
-              ? `
-          <div style="background: #fef9e7; border-left: 3px solid #d4a843; padding: 12px 16px; margin: 20px 0;">
-            <p style="margin: 0; font-weight: bold;">Needs Your Attention</p>
-            ${pendingConsultations > 0 ? `<p style="margin: 4px 0 0 0;">${pendingConsultations} consultation(s) awaiting review</p>` : ''}
-            ${pendingRentals > 0 ? `<p style="margin: 4px 0 0 0;">${pendingRentals} rental inquiry/ies awaiting review</p>` : ''}
-          </div>`
-              : ''
-          }
-
-          <p style="margin-top: 24px; font-size: 14px; color: #777;">
-            Revenue summary will appear here once Square sync is active.
-          </p>
-
-          <p style="margin-top: 32px; font-size: 13px; color: #aaa;">— The Wild Dandelion Platform</p>
-        </div>
+    // Get stats for the week
+    // Note: These queries work with the sync tables. If they don't exist, counts will be 0.
+    
+    // Bookings this week
+    const bookingsResult = await db.execute({
+      sql: `
+        SELECT COUNT(*) as count FROM bookings_sync 
+        WHERE start_at BETWEEN ? AND ? AND status = 'ACCEPTED'
       `,
+      args: [weekStartStr, weekEndStr],
+    }).catch(() => ({ rows: [{ count: 0 }] }));
+    const bookingCount = Number(bookingsResult.rows[0]?.count || 0);
+
+    // New clients this week
+    const clientsResult = await db.execute({
+      sql: `
+        SELECT COUNT(*) as count FROM customers_sync 
+        WHERE created_at BETWEEN ? AND ?
+      `,
+      args: [weekStartStr, weekEndStr],
+    }).catch(() => ({ rows: [{ count: 0 }] }));
+    const newClientCount = Number(clientsResult.rows[0]?.count || 0);
+
+    // New consultations
+    const consultationsResult = await db.execute({
+      sql: `
+        SELECT COUNT(*) as count FROM consultations 
+        WHERE created_at BETWEEN ? AND ?
+      `,
+      args: [weekStartStr, weekEndStr],
+    }).catch(() => ({ rows: [{ count: 0 }] }));
+    const consultationCount = Number(consultationsResult.rows[0]?.count || 0);
+
+    // New rental inquiries
+    const rentalsResult = await db.execute({
+      sql: `
+        SELECT COUNT(*) as count FROM rental_inquiries 
+        WHERE created_at BETWEEN ? AND ?
+      `,
+      args: [weekStartStr, weekEndStr],
+    }).catch(() => ({ rows: [{ count: 0 }] }));
+    const rentalInquiryCount = Number(rentalsResult.rows[0]?.count || 0);
+
+    // Format dates for email
+    const weekStartFormatted = weekStart.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+    });
+    const weekEndFormatted = weekEnd.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
     });
 
-    // Log digest send
-    try {
-      await db.execute({
-        sql: `INSERT INTO notification_log (id, type, recipient, subject, status, sent_at)
-              VALUES (?, 'weekly_digest', ?, ?, ?, datetime('now'))`,
-        args: [
-          crypto.randomUUID(),
-          ASHLEY_EMAIL,
-          `Weekly Digest — ${weekLabel}`,
-          emailResult.success ? 'sent' : 'failed',
-        ],
-      });
-    } catch (logErr) {
-      console.warn('[WEEKLY-DIGEST] Could not log:', logErr);
-    }
+    // Send the digest
+    const emailResult = await sendWeeklyDigest({
+      to: ashleyEmail,
+      weekStart: weekStartFormatted,
+      weekEnd: weekEndFormatted,
+      bookingCount,
+      newClientCount,
+      consultationCount,
+      rentalInquiryCount,
+    });
+
+    // Log the notification
+    const notificationId = randomUUID();
+    await db.execute({
+      sql: `
+        INSERT INTO notification_log (id, type, recipient, subject, status, sent_at, created_at)
+        VALUES (?, ?, ?, ?, ?, datetime('now'), datetime('now'))
+      `,
+      args: [
+        notificationId,
+        'weekly_digest',
+        ashleyEmail,
+        `Weekly summary (${weekStartFormatted} — ${weekEndFormatted})`,
+        emailResult.success ? 'sent' : 'failed',
+      ],
+    }).catch(() => {});
 
     return NextResponse.json({
-      success: emailResult.success,
-      placeholder: emailResult.placeholder,
+      success: true,
+      notificationId,
+      emailSent: emailResult.success,
       stats: {
+        weekStart: weekStartStr,
+        weekEnd: weekEndStr,
         bookingCount,
-        newConsultations,
-        newRentalInquiries,
-        pendingConsultations,
-        pendingRentals,
-        notificationsSent,
+        newClientCount,
+        consultationCount,
+        rentalInquiryCount,
       },
     });
   } catch (error) {
-    console.error('[WEEKLY-DIGEST] Error:', error);
-    return NextResponse.json({ error: 'Weekly digest failed' }, { status: 500 });
+    console.error('[notify/weekly-digest] Error:', error);
+    return NextResponse.json(
+      { 
+        success: false, 
+        error: 'Failed to send weekly digest',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
+    );
   }
 }

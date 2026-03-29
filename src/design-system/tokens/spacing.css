@@ -1,12 +1,73 @@
-:root {
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 40px;
-  --space-2xl: 64px;
-  --space-section: clamp(4rem, 8vw, 7rem);
+/* ═════════════════════════════════════════════════════════════════════════════
+   The Wild Dandelion Collective — Spacing Tokens
+   Generous, breathable, modern spacing
+   ═════════════════════════════════════════════════════════════════════════════ */
 
-  --max-width: 1140px;
-  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+:root {
+  /* ── Base Spacing Scale ──────────────────────────────────────────────────── */
+  
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  
+  /* ── Semantic Spacing ────────────────────────────────────────────────────── */
+  
+  /* Component internal spacing */
+  --space-xs: var(--space-2);
+  --space-sm: var(--space-4);
+  --space-md: var(--space-6);
+  --space-lg: var(--space-8);
+  --space-xl: var(--space-10);
+  --space-2xl: var(--space-12);
+  --space-3xl: var(--space-16);
+  --space-4xl: var(--space-20);
+  
+  /* ── Section Spacing ─────────────────────────────────────────────────────── */
+  
+  /* Section padding - generous breathing room */
+  --section-padding-y: clamp(var(--space-16), 10vw, var(--space-32));
+  --section-padding-x: clamp(var(--space-4), 5vw, var(--space-8));
+  
+  /* ── Container ───────────────────────────────────────────────────────────── */
+  
+  --container-max: 1280px;
+  --container-narrow: 768px;
+  --container-wide: 1440px;
+  
+  /* ── Grid ────────────────────────────────────────────────────────────────── */
+  
+  --grid-gap: var(--space-6);
+  --grid-gap-lg: var(--space-8);
+  
+  /* ── Component Specific ──────────────────────────────────────────────────── */
+  
+  /* Card padding */
+  --card-padding: var(--space-6);
+  --card-padding-lg: var(--space-8);
+  
+  /* Button padding */
+  --button-padding-x: var(--space-6);
+  --button-padding-y: var(--space-3);
+  --button-padding-lg-x: var(--space-8);
+  
+  /* Input padding */
+  --input-padding: var(--space-4);
+  --input-padding-lg: var(--space-5);
+  
+  /* ── Safe Areas ──────────────────────────────────────────────────────────── */
+  
+  --safe-top: env(safe-area-inset-top, 0);
+  --safe-bottom: env(safe-area-inset-bottom, 0);
+  --safe-left: env(safe-area-inset-left, 0);
+  --safe-right: env(safe-area-inset-right, 0);
 }
